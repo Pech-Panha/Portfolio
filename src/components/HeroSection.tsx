@@ -10,31 +10,73 @@ const HeroSection = () => (
     <DecorativeStar className="absolute bottom-20 right-1/3 animate-sparkle delay-400" color="primary" size="sm" />
 
     {/* Floating shapes */}
-    <div className="absolute top-20 right-1/4 w-20 h-20 bg-secondary rounded-full opacity-60 animate-float" />
-    <div className="absolute bottom-40 left-16 w-12 h-12 bg-accent/30 rounded-full animate-float delay-200" />
+    <div className="absolute top-20 right-1/4 w-24 h-24 bg-secondary rounded-full opacity-50 animate-float" />
+    <div className="absolute bottom-40 left-16 w-14 h-14 bg-accent/20 rounded-full animate-float delay-200" />
+    <div className="absolute top-1/2 left-8 w-10 h-10 bg-primary/10 rounded-full animate-float delay-300" />
 
-    <div className="max-w-5xl mx-auto text-center">
-      <p className="font-body text-muted-foreground text-lg mb-4 tracking-widest uppercase animate-fade-up">
-        Creative Portfolio
-      </p>
-      <h1 className="font-display text-7xl md:text-9xl font-black text-primary leading-none mb-6 animate-fade-up delay-100">
-        Port
-        <br />
-        <span className="text-foreground">fol</span>
-        <span className="text-primary">io</span>
-      </h1>
-      <div className="inline-block bg-accent text-accent-foreground px-6 py-2 rounded-full font-body font-semibold text-sm tracking-wide mb-8 animate-fade-up delay-200">
-        Graphic Designer
+    {/* Wavy line decoration */}
+    <svg className="absolute bottom-24 left-1/2 -translate-x-1/2 w-64 opacity-30" viewBox="0 0 200 20" fill="none">
+      <path d="M0 10 Q25 0 50 10 T100 10 T150 10 T200 10" stroke="hsl(var(--accent))" strokeWidth="3" fill="none" />
+    </svg>
+
+    <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="text-left">
+        <p className="font-body text-muted-foreground text-sm mb-3 tracking-[0.3em] uppercase animate-fade-up">
+          UI/UX Design Student
+        </p>
+        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-black leading-[0.85] mb-6 animate-fade-up delay-100">
+          <span className="text-primary">Port</span>
+          <br />
+          <span className="text-foreground">fol</span>
+          <span className="text-primary">io</span>
+        </h1>
+        <div className="flex items-center gap-3 mb-6 animate-fade-up delay-200">
+          <div className="inline-block bg-accent text-accent-foreground px-5 py-2 rounded-full font-body font-semibold text-sm tracking-wide">
+            UI/UX Designer
+          </div>
+          <div className="inline-block bg-secondary text-secondary-foreground px-4 py-2 rounded-full font-body font-medium text-xs">
+            2025 Edition
+          </div>
+        </div>
+        <p className="font-body text-muted-foreground max-w-sm text-base leading-relaxed mb-8 animate-fade-up delay-300">
+          A passionate design student exploring the intersection of user experience, interface design, and creative problem-solving.
+        </p>
+        <div className="flex gap-4 animate-fade-up delay-400">
+          <a
+            href="#projects"
+            className="bg-primary text-primary-foreground px-7 py-3 rounded-full font-body font-semibold text-sm hover:opacity-90 transition-opacity"
+          >
+            View Projects ↓
+          </a>
+          <a
+            href="#contact"
+            className="border-2 border-foreground/20 text-foreground px-7 py-3 rounded-full font-body font-semibold text-sm hover:bg-foreground/5 transition-colors"
+          >
+            Say Hello
+          </a>
+        </div>
       </div>
-      <p className="font-body text-muted-foreground max-w-md mx-auto text-lg animate-fade-up delay-300">
-        Crafting visual stories through design, illustration & creative direction.
-      </p>
-      <a
-        href="#about"
-        className="inline-block mt-10 bg-primary text-primary-foreground px-8 py-3 rounded-full font-body font-semibold hover:opacity-90 transition-opacity animate-fade-up delay-400"
-      >
-        Explore My Work ↓
-      </a>
+
+      <div className="relative flex justify-center animate-fade-up delay-200">
+        {/* Blob background */}
+        <div className="absolute -inset-4 bg-primary/10 rounded-[3rem] rotate-3 animate-float" />
+        <div className="absolute -inset-4 bg-secondary/20 rounded-[3rem] -rotate-2 animate-float delay-200" />
+        <div className="relative bg-card rounded-[2rem] p-3 shadow-xl border border-border">
+          <div className="w-64 h-72 md:w-72 md:h-80 bg-muted rounded-[1.5rem] flex items-center justify-center overflow-hidden">
+            <div className="text-center p-6">
+              <div className="w-24 h-24 bg-primary/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl">🎨</span>
+              </div>
+              <p className="font-display text-lg font-bold text-foreground">Your Photo</p>
+              <p className="font-body text-xs text-muted-foreground mt-1">Design Student</p>
+            </div>
+          </div>
+          <div className="mt-3 px-2 pb-1">
+            <p className="font-display font-bold text-foreground text-sm">Design Student</p>
+            <p className="font-body text-xs text-muted-foreground">📍 Aspiring UI/UX Designer</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 );
