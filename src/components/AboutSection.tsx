@@ -1,4 +1,5 @@
 import DecorativeStar from "./DecorativeStar";
+import studentPhoto from "@/assets/student-photo.png";
 
 const AboutSection = () => (
   <section id="about" className="relative px-6 py-24">
@@ -12,17 +13,16 @@ const AboutSection = () => (
         </h2>
         <div className="w-32 h-1 bg-accent rounded-full mb-6" />
         <p className="font-body text-muted-foreground text-lg leading-relaxed mb-4">
-          I'm a <span className="font-semibold text-foreground">graphic designer</span> passionate
-          about visual communication. I love challenging myself to{" "}
-          <em className="text-primary font-medium">gain new knowledge</em> and{" "}
-          <em className="text-primary font-medium">develop my creativity</em> in fun and meaningful ways.
+          I'm a <span className="font-semibold text-foreground">UI/UX design student</span> passionate
+          about creating intuitive and beautiful digital experiences. I love{" "}
+          <em className="text-primary font-medium">learning new design principles</em> and{" "}
+          <em className="text-primary font-medium">solving real user problems</em> through thoughtful interfaces.
         </p>
         <p className="font-body text-muted-foreground text-lg leading-relaxed mb-8">
-          I consider myself hard-working, adaptable, and always eager to contribute to projects
-          that push creative boundaries.
+          Currently studying and building my portfolio — eager to grow, collaborate, and bring fresh ideas to the design world.
         </p>
         <div className="flex flex-wrap gap-3">
-          {["Brand Design", "UI/UX", "Illustration", "Social Media"].map((skill) => (
+          {["UI Design", "UX Research", "Wireframing", "Prototyping", "Figma"].map((skill) => (
             <span
               key={skill}
               className="bg-secondary text-secondary-foreground px-4 py-1.5 rounded-full font-body text-sm font-medium"
@@ -33,22 +33,16 @@ const AboutSection = () => (
         </div>
       </div>
 
-      <div className="animate-fade-up delay-200">
-        <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
-          <h3 className="font-display text-2xl font-bold text-foreground mb-6">Experience</h3>
-          <div className="space-y-5">
-            {[
-              { period: "2022 — Now", role: "Freelancer & Designer", desc: "Brand design, social posts, UI/UX" },
-              { period: "2022", role: "Freelance Designer", desc: "Café branding & visual identity" },
-              { period: "2019", role: "Design Intern", desc: "IT Services — illustration & design" },
-            ].map((item) => (
-              <div key={item.period} className="border-l-2 border-primary pl-4">
-                <p className="font-body text-xs text-muted-foreground italic">{item.period}</p>
-                <p className="font-body font-semibold text-foreground">{item.role}</p>
-                <p className="font-body text-sm text-muted-foreground">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+      <div className="animate-fade-up delay-200 flex justify-center">
+        <div className="relative">
+          {/* Decorative background blobs */}
+          <div className="absolute -inset-6 bg-primary/10 rounded-[2.5rem] rotate-3" />
+          <div className="absolute -inset-6 bg-accent/10 rounded-[2.5rem] -rotate-2" />
+          <img
+            src={studentPhoto}
+            alt="Design student"
+            className="relative w-72 h-80 object-cover rounded-2xl shadow-lg border-4 border-card"
+          />
         </div>
       </div>
     </div>
