@@ -1,53 +1,44 @@
 import DecorativeStar from "./DecorativeStar";
 
 const projects = [
-  {
-    title: "Brand Identity",
-    category: "Branding",
-    description: "Complete visual identity system for a modern café brand.",
-    color: "bg-primary",
-  },
-  {
-    title: "Social Media Kit",
-    category: "Digital Design",
-    description: "Instagram templates and story designs for lifestyle brand.",
-    color: "bg-accent",
-  },
-  {
-    title: "Poster Series",
-    category: "Print Design",
-    description: "Event poster collection with bold typographic treatments.",
-    color: "bg-secondary",
-  },
+  { title: "Mobile App Redesign", category: "UI Design", description: "Clean and modern mobile banking experience.", color: "bg-primary" },
+  { title: "E-Commerce Dashboard", category: "UX Design", description: "Data-driven admin panel with intuitive navigation.", color: "bg-accent" },
+  { title: "Travel App Concept", category: "Prototyping", description: "End-to-end travel booking flow with micro-interactions.", color: "bg-secondary" },
+  { title: "Health & Fitness", category: "UI/UX", description: "Wellness tracking app with calming visual language.", color: "bg-primary" },
+  { title: "Food Delivery UI", category: "UI Design", description: "Vibrant food ordering interface with smooth checkout.", color: "bg-accent" },
+  { title: "Portfolio Website", category: "Web Design", description: "Creative personal site with bold typography.", color: "bg-secondary" },
 ];
 
+// Duplicate for seamless loop
+const allProjects = [...projects, ...projects];
+
 const ProjectsSection = () => (
-  <section id="projects" className="relative px-6 py-24">
+  <section id="projects" className="relative py-24 overflow-hidden">
     <DecorativeStar className="absolute top-8 left-20 animate-sparkle delay-100" color="secondary" size="lg" />
     <DecorativeStar className="absolute bottom-12 right-16 animate-sparkle delay-400" color="primary" size="sm" />
 
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto px-6 mb-12">
       <h2 className="font-display text-5xl md:text-6xl font-black text-foreground mb-4 animate-fade-up">
         Project Highlights
       </h2>
-      <p className="font-body text-muted-foreground text-lg mb-12 max-w-lg animate-fade-up delay-100">
+      <p className="font-body text-muted-foreground text-lg max-w-lg animate-fade-up delay-100">
         Selected works showcasing my approach to design and visual storytelling.
       </p>
+    </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {projects.map((project, i) => (
-          <div
-            key={project.title}
-            className={`group animate-fade-up delay-${(i + 2) * 100}`}
-          >
+    {/* Auto-scrolling marquee */}
+    <div className="relative group">
+      <div className="flex gap-6 animate-marquee hover:[animation-play-state:paused] w-max">
+        {allProjects.map((project, i) => (
+          <div key={`${project.title}-${i}`} className="w-72 flex-shrink-0">
             <div
-              className={`${project.color} rounded-2xl h-56 mb-4 flex items-end p-6 transition-transform group-hover:scale-[1.02]`}
+              className={`${project.color} rounded-2xl h-48 mb-4 flex items-end p-6 transition-transform hover:scale-[1.03]`}
             >
               <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
                 {project.category}
               </span>
             </div>
-            <h3 className="font-display text-xl font-bold text-foreground mb-1">
+            <h3 className="font-display text-lg font-bold text-foreground mb-1">
               {project.title}
             </h3>
             <p className="font-body text-muted-foreground text-sm">{project.description}</p>
