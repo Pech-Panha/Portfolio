@@ -9,7 +9,6 @@ const projects = [
   { title: "Portfolio Website", category: "Web Design", description: "Creative personal site with bold typography.", color: "bg-secondary" },
 ];
 
-// Duplicate for seamless loop
 const allProjects = [...projects, ...projects];
 
 const ProjectsSection = () => (
@@ -26,13 +25,12 @@ const ProjectsSection = () => (
       </p>
     </div>
 
-    {/* Auto-scrolling marquee */}
-    <div className="relative group">
-      <div className="flex gap-6 animate-marquee hover:[animation-play-state:paused] w-max">
+    <div className="relative">
+      <div className="flex gap-6 pl-6 animate-marquee hover:[animation-play-state:paused] w-max">
         {allProjects.map((project, i) => (
-          <div key={`${project.title}-${i}`} className="w-72 flex-shrink-0">
+          <div key={`${project.title}-${i}`} className="w-56 flex-shrink-0">
             <div
-              className={`${project.color} rounded-2xl h-48 mb-4 flex items-end p-6 transition-transform hover:scale-[1.03]`}
+              className={`${project.color} rounded-2xl h-80 mb-4 flex items-end p-5 transition-transform hover:scale-[1.03] cursor-pointer`}
             >
               <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
                 {project.category}
