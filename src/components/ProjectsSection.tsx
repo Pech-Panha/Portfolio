@@ -108,11 +108,19 @@ const ProjectsSection = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/5 rounded-2xl scale-0 group-hover:scale-110 transition-transform duration-500 blur-xl" />
                 <div
-                  className={`${project.color} rounded-2xl aspect-[3/4] mb-4 flex items-end p-5 transition-all group-hover:shadow-xl group-hover:-translate-y-1 relative z-10 overflow-hidden`}
+                  className="rounded-2xl aspect-[3/4] mb-4 transition-all group-hover:shadow-xl group-hover:-translate-y-1 relative z-10 overflow-hidden"
                 >
-                  <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
-                    {project.category}
-                  </span>
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-5">
+                    <span className="text-white font-body text-xs uppercase tracking-widest opacity-90">
+                      {project.category}
+                    </span>
+                  </div>
                 </div>
               </div>
               <h3 className="font-display text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
