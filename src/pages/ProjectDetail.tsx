@@ -50,11 +50,8 @@ const ProjectDetail = () => {
 
           {/* Hero Image / Color Block */}
           <div className="flex justify-center mb-24 animate-fade-up delay-100">
-            <div className={`w-full max-w-sm aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl border-[12px] border-card ${project.color} flex items-center justify-center`}>
-              <div className="text-center text-primary-foreground">
-                <span className="text-6xl block mb-4">🎨</span>
-                <p className="font-display text-xl font-bold">{project.category}</p>
-              </div>
+            <div className="w-full max-w-sm aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl border-[12px] border-card">
+              <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -105,8 +102,8 @@ const ProjectDetail = () => {
                 key={other.id}
                 className="snap-start flex-none group w-[280px]"
               >
-                <div className={`aspect-[3/4] rounded-[2rem] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 border border-border ${other.color} flex items-center justify-center`}>
-                  <span className="text-primary-foreground text-5xl">🎨</span>
+                <div className="aspect-[3/4] rounded-[2rem] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 border border-border">
+                  <img src={other.image} alt={other.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="mt-6 px-2">
                   <span className="font-body text-[9px] font-black uppercase tracking-[0.2em] text-primary block mb-1">
