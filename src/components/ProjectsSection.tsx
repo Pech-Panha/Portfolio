@@ -1,13 +1,6 @@
+import { Link } from "react-router-dom";
 import DecorativeStar from "./DecorativeStar";
-
-const projects = [
-  { title: "Mobile App Redesign", category: "UI Design", description: "Clean and modern mobile banking experience.", color: "bg-primary" },
-  { title: "E-Commerce Dashboard", category: "UX Design", description: "Data-driven admin panel with intuitive navigation.", color: "bg-accent" },
-  { title: "Travel App Concept", category: "Prototyping", description: "End-to-end travel booking flow with micro-interactions.", color: "bg-secondary" },
-  { title: "Health & Fitness", category: "UI/UX", description: "Wellness tracking app with calming visual language.", color: "bg-primary" },
-  { title: "Food Delivery UI", category: "UI Design", description: "Vibrant food ordering interface with smooth checkout.", color: "bg-accent" },
-  { title: "Portfolio Website", category: "Web Design", description: "Creative personal site with bold typography.", color: "bg-secondary" },
-];
+import { projects } from "@/data/projects";
 
 const allProjects = [...projects, ...projects];
 
@@ -21,26 +14,29 @@ const ProjectsSection = () => (
         Project Highlights
       </h2>
       <p className="font-body text-muted-foreground text-lg max-w-lg animate-fade-up delay-100">
-        Selected works showcasing my approach to design and visual storytelling.
+        Selected works showcasing my approach to design and visual storytelling. <span className="text-xs opacity-50 uppercase tracking-widest">(Drag to scroll)</span>
       </p>
     </div>
 
     <div className="relative">
       <div className="flex gap-6 pl-6 animate-marquee hover:[animation-play-state:paused] w-max">
         {allProjects.map((project, i) => (
-          <div key={`${project.title}-${i}`} className="w-56 flex-shrink-0">
-            <div
-              className={`${project.color} rounded-2xl h-80 mb-4 flex items-end p-5 transition-transform hover:scale-[1.03] cursor-pointer`}
-            >
-              <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
-                {project.category}
-              </span>
+          <Link to={`/project/${project.id}`} key={`${project.id}-${i}`} className="w-64 flex-shrink-0 group">
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/5 rounded-2xl scale-0 group-hover:scale-110 transition-transform duration-500 blur-xl" />
+              <div
+                className={`${project.color} rounded-2xl aspect-[3/4] mb-4 flex items-end p-5 transition-all group-hover:shadow-xl group-hover:-translate-y-1 cursor-pointer relative z-10 overflow-hidden`}
+              >
+                <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
+                  {project.category}
+                </span>
+              </div>
             </div>
-            <h3 className="font-display text-lg font-bold text-foreground mb-1">
+            <h3 className="font-display text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
               {project.title}
             </h3>
-            <p className="font-body text-muted-foreground text-sm">{project.description}</p>
-          </div>
+            <p className="font-body text-muted-foreground text-sm">{project.shortDesc}</p>
+          </Link>
         ))}
       </div>
     </div>
