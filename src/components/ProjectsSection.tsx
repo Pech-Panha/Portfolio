@@ -1,46 +1,130 @@
 import { Link } from "react-router-dom";
+import { useRef, useState, useEffect, useCallback } from "react";
 import DecorativeStar from "./DecorativeStar";
 import { projects } from "@/data/projects";
 
-const allProjects = [...projects, ...projects];
+const allProjects = [...projects, ...projects, ...projects];
 
-const ProjectsSection = () => (
-  <section id="projects" className="relative py-24 overflow-hidden">
-    <DecorativeStar className="absolute top-8 left-20 animate-sparkle delay-100" color="secondary" size="lg" />
-    <DecorativeStar className="absolute bottom-12 right-16 animate-sparkle delay-400" color="primary" size="sm" />
+const ProjectsSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const animRef = useRef<number>();
+  const scrollPos = useRef(0);
 
-    <div className="max-w-5xl mx-auto px-6 mb-12">
-      <h2 className="font-display text-5xl md:text-6xl font-black text-foreground mb-4 animate-fade-up">
-        Project Highlights
-      </h2>
-      <p className="font-body text-muted-foreground text-lg max-w-lg animate-fade-up delay-100">
-        Selected works showcasing my approach to design and visual storytelling. <span className="text-xs opacity-50 uppercase tracking-widest">(Drag to scroll)</span>
-      </p>
-    </div>
+  const speed = 0.4; // px per frame — slow & smooth
 
-    <div className="relative">
-      <div className="flex gap-6 pl-6 animate-marquee hover:[animation-play-state:paused] w-max">
-        {allProjects.map((project, i) => (
-          <Link to={`/project/${project.id}`} key={`${project.id}-${i}`} className="w-64 flex-shrink-0 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/5 rounded-2xl scale-0 group-hover:scale-110 transition-transform duration-500 blur-xl" />
-              <div
-                className={`${project.color} rounded-2xl aspect-[3/4] mb-4 flex items-end p-5 transition-all group-hover:shadow-xl group-hover:-translate-y-1 cursor-pointer relative z-10 overflow-hidden`}
-              >
-                <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
-                  {project.category}
-                </span>
-              </div>
-            </div>
-            <h3 className="font-display text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-              {project.title}
-            </h3>
-            <p className="font-body text-muted-foreground text-sm">{project.shortDesc}</p>
-          </Link>
-        ))}
+  const animate = useCallback(() => {
+    if (!containerRef.current || isPaused || isDragging) {
+      animRef.current = requestAnimationFrame(animate);
+      return;
+    }
+    scrollPos.current += speed;
+    // Reset seamlessly when we've scrolled through one set
+    const half = containerRef.current.scrollWidth / 3;
+    if (scrollPos.current >= half) scrollPos.current = 0;
+    containerRef.current.scrollLeft = scrollPos.current;
+    animRef.current = requestAnimationFrame(animate);
+  }, [isPaused, isDragging]);
+
+  useEffect(() => {
+    animRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [animate]);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
+    setScrollLeft(containerRef.current?.scrollLeft || 0);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+    scrollPos.current = containerRef.current.scrollLeft;
+  };
+
+  const onEnd = () => setIsDragging(false);
+
+  // Touch support
+  const onTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - (containerRef.current?.offsetLeft || 0));
+    setScrollLeft(containerRef.current?.scrollLeft || 0);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    const x = e.touches[0].pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+    scrollPos.current = containerRef.current.scrollLeft;
+  };
+
+  return (
+    <section id="projects" className="relative py-24 overflow-hidden">
+      <DecorativeStar className="absolute top-8 left-20 animate-sparkle delay-100" color="secondary" size="lg" />
+      <DecorativeStar className="absolute bottom-12 right-16 animate-sparkle delay-400" color="primary" size="sm" />
+
+      <div className="max-w-5xl mx-auto px-6 mb-12">
+        <h2 className="font-display text-5xl md:text-6xl font-black text-foreground mb-4 animate-fade-up">
+          Project Highlights
+        </h2>
+        <p className="font-body text-muted-foreground text-lg max-w-lg animate-fade-up delay-100">
+          Selected works showcasing my approach to design and visual storytelling.{" "}
+          <span className="text-xs opacity-50 uppercase tracking-widest">(Drag to scroll)</span>
+        </p>
       </div>
-    </div>
-  </section>
-);
+
+      <div
+        ref={containerRef}
+        className={`overflow-x-auto px-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"} select-none`}
+        style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onEnd}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onEnd}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => { onEnd(); setIsPaused(false); }}
+      >
+        <div className="flex gap-6 w-max">
+          {allProjects.map((project, i) => (
+            <Link
+              to={`/project/${project.id}`}
+              key={`${project.id}-${i}`}
+              className="w-64 flex-shrink-0 group"
+              onClick={(e) => isDragging && e.preventDefault()}
+              draggable={false}
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/5 rounded-2xl scale-0 group-hover:scale-110 transition-transform duration-500 blur-xl" />
+                <div
+                  className={`${project.color} rounded-2xl aspect-[3/4] mb-4 flex items-end p-5 transition-all group-hover:shadow-xl group-hover:-translate-y-1 relative z-10 overflow-hidden`}
+                >
+                  <span className="text-primary-foreground font-body text-xs uppercase tracking-widest opacity-80">
+                    {project.category}
+                  </span>
+                </div>
+              </div>
+              <h3 className="font-display text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                {project.title}
+              </h3>
+              <p className="font-body text-muted-foreground text-sm">{project.shortDesc}</p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default ProjectsSection;
