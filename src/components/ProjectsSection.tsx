@@ -41,6 +41,7 @@ const ProjectsSection = () => {
 
   const onMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
+    dragDistance.current = 0;
     setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
     setScrollLeft(containerRef.current?.scrollLeft || 0);
   };
@@ -49,16 +50,18 @@ const ProjectsSection = () => {
     if (!isDragging || !containerRef.current) return;
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    containerRef.current.scrollLeft = scrollLeft - walk;
-    scrollPos.current = containerRef.current.scrollLeft;
+    const walk = (x - startX) * 1.5;
+    dragDistance.current = Math.abs(walk);
+    const newScroll = scrollLeft - walk;
+    containerRef.current.scrollLeft = newScroll;
+    scrollPos.current = newScroll;
   };
 
   const onEnd = () => setIsDragging(false);
 
-  // Touch support
   const onTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
+    dragDistance.current = 0;
     setStartX(e.touches[0].pageX - (containerRef.current?.offsetLeft || 0));
     setScrollLeft(containerRef.current?.scrollLeft || 0);
   };
@@ -66,9 +69,11 @@ const ProjectsSection = () => {
   const onTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !containerRef.current) return;
     const x = e.touches[0].pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    containerRef.current.scrollLeft = scrollLeft - walk;
-    scrollPos.current = containerRef.current.scrollLeft;
+    const walk = (x - startX) * 1.5;
+    dragDistance.current = Math.abs(walk);
+    const newScroll = scrollLeft - walk;
+    containerRef.current.scrollLeft = newScroll;
+    scrollPos.current = newScroll;
   };
 
   return (
