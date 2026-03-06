@@ -94,7 +94,7 @@ const ProjectsSection = () => {
       <div
         ref={containerRef}
         className={`overflow-x-auto px-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"} select-none`}
-        style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onEnd}
