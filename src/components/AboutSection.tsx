@@ -1,5 +1,5 @@
 import DecorativeStar from "./DecorativeStar";
-import studentPhoto from "@/assets/student-photo.png";
+import aboutPhoto from "@/assets/about-photo.png";
 
 const AboutSection = () => (
   <section id="about" className="relative px-6 py-24">
