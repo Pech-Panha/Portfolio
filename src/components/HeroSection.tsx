@@ -1,4 +1,5 @@
 import DecorativeStar from "./DecorativeStar";
+import profileImg from "@/assets/profile.png";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20">
