@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import DecorativeStar from "./DecorativeStar";
 import { projects } from "@/data/projects";
 
@@ -7,73 +7,61 @@ const allProjects = [...projects, ...projects, ...projects];
 
 const ProjectsSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const animRef = useRef<number>();
   const scrollPos = useRef(0);
-
-  const speed = 0.5; // px per frame
-  const dragThreshold = 5;
+  const isPaused = useRef(false);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollStart = useRef(0);
   const dragDistance = useRef(0);
+  const dragThreshold = 5;
 
-  const animate = useCallback(() => {
-    if (!containerRef.current) {
-      animRef.current = requestAnimationFrame(animate);
-      return;
-    }
-    if (!isPaused && !isDragging) {
-      scrollPos.current += speed;
-      const third = containerRef.current.scrollWidth / 3;
-      if (scrollPos.current >= third) scrollPos.current -= third;
-      containerRef.current.scrollLeft = scrollPos.current;
-    }
-    animRef.current = requestAnimationFrame(animate);
-  }, [isPaused, isDragging]);
+  const speed = 0.25; // slower — gentle drift
 
   useEffect(() => {
+    const animate = () => {
+      const el = containerRef.current;
+      if (el && !isPaused.current && !isDragging.current) {
+        scrollPos.current += speed;
+        const third = el.scrollWidth / 3;
+        if (scrollPos.current >= third) scrollPos.current -= third;
+        if (scrollPos.current < 0) scrollPos.current += third;
+        el.scrollLeft = scrollPos.current;
+      }
+      animRef.current = requestAnimationFrame(animate);
+    };
     animRef.current = requestAnimationFrame(animate);
     return () => {
       if (animRef.current) cancelAnimationFrame(animRef.current);
     };
-  }, [animate]);
+  }, []);
 
-  const onMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
+  const onPointerDown = (clientX: number) => {
+    isDragging.current = true;
     dragDistance.current = 0;
-    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
-    setScrollLeft(containerRef.current?.scrollLeft || 0);
+    const el = containerRef.current;
+    if (!el) return;
+    startX.current = clientX;
+    scrollStart.current = el.scrollLeft;
+    el.style.cursor = "grabbing";
   };
 
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !containerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
+  const onPointerMove = (clientX: number) => {
+    if (!isDragging.current || !containerRef.current) return;
+    const walk = clientX - startX.current;
     dragDistance.current = Math.abs(walk);
-    const newScroll = scrollLeft - walk;
+    const newScroll = scrollStart.current - walk;
     containerRef.current.scrollLeft = newScroll;
     scrollPos.current = newScroll;
   };
 
-  const onEnd = () => setIsDragging(false);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true);
-    dragDistance.current = 0;
-    setStartX(e.touches[0].pageX - (containerRef.current?.offsetLeft || 0));
-    setScrollLeft(containerRef.current?.scrollLeft || 0);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !containerRef.current) return;
-    const x = e.touches[0].pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    dragDistance.current = Math.abs(walk);
-    const newScroll = scrollLeft - walk;
-    containerRef.current.scrollLeft = newScroll;
-    scrollPos.current = newScroll;
+  const onPointerUp = () => {
+    isDragging.current = false;
+    if (containerRef.current) {
+      containerRef.current.style.cursor = "grab";
+      // sync position after drag
+      scrollPos.current = containerRef.current.scrollLeft;
+    }
   };
 
   return (
@@ -93,16 +81,16 @@ const ProjectsSection = () => {
 
       <div
         ref={containerRef}
-        className={`overflow-x-auto px-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"} select-none`}
+        className="overflow-x-auto px-6 cursor-grab select-none"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onEnd}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onEnd}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => { onEnd(); setIsPaused(false); }}
+        onMouseDown={(e) => { e.preventDefault(); onPointerDown(e.clientX); }}
+        onMouseMove={(e) => { e.preventDefault(); onPointerMove(e.clientX); }}
+        onMouseUp={onPointerUp}
+        onMouseLeave={() => { onPointerUp(); isPaused.current = false; }}
+        onMouseEnter={() => { isPaused.current = true; }}
+        onTouchStart={(e) => onPointerDown(e.touches[0].clientX)}
+        onTouchMove={(e) => onPointerMove(e.touches[0].clientX)}
+        onTouchEnd={onPointerUp}
       >
         <div className="flex gap-6 w-max">
           {allProjects.map((project, i) => (
@@ -115,9 +103,7 @@ const ProjectsSection = () => {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/5 rounded-2xl scale-0 group-hover:scale-110 transition-transform duration-500 blur-xl" />
-                <div
-                  className="rounded-2xl aspect-[3/4] mb-4 transition-all group-hover:shadow-xl group-hover:-translate-y-1 relative z-10 overflow-hidden"
-                >
+                <div className="rounded-2xl aspect-[3/4] mb-4 transition-all group-hover:shadow-xl group-hover:-translate-y-1 relative z-10 overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
