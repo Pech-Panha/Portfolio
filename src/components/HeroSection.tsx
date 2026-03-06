@@ -1,4 +1,5 @@
 import DecorativeStar from "./DecorativeStar";
+import profileImg from "@/assets/profile.png";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20">
@@ -62,14 +63,8 @@ const HeroSection = () => (
         <div className="absolute -inset-4 bg-primary/10 rounded-[3rem] rotate-3 animate-float" />
         <div className="absolute -inset-4 bg-secondary/20 rounded-[3rem] -rotate-2 animate-float delay-200" />
         <div className="relative bg-card rounded-[2rem] p-3 shadow-xl border border-border">
-          <div className="w-64 h-72 md:w-72 md:h-80 bg-muted rounded-[1.5rem] flex items-center justify-center overflow-hidden">
-            <div className="text-center p-6">
-              <div className="w-24 h-24 bg-primary/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl">🎨</span>
-              </div>
-              <p className="font-display text-lg font-bold text-foreground">Your Photo</p>
-              <p className="font-body text-xs text-muted-foreground mt-1">Design Student</p>
-            </div>
+          <div className="w-64 h-72 md:w-72 md:h-80 bg-muted rounded-[1.5rem] overflow-hidden">
+            <img src={profileImg} alt="Design Student" className="w-full h-full object-cover" />
           </div>
           <div className="mt-3 px-2 pb-1">
             <p className="font-display font-bold text-foreground text-sm">Design Student</p>

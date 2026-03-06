@@ -1,5 +1,5 @@
 import DecorativeStar from "./DecorativeStar";
-import studentPhoto from "@/assets/student-photo.png";
+import aboutPhoto from "@/assets/about-photo.png";
 
 const AboutSection = () => (
   <section id="about" className="relative px-6 py-24">
@@ -39,7 +39,7 @@ const AboutSection = () => (
           <div className="absolute -inset-6 bg-primary/10 rounded-[2.5rem] rotate-3" />
           <div className="absolute -inset-6 bg-accent/10 rounded-[2.5rem] -rotate-2" />
           <img
-            src={studentPhoto}
+            src={aboutPhoto}
             alt="Design student"
             className="relative w-72 h-80 object-cover rounded-2xl shadow-lg border-4 border-card"
           />

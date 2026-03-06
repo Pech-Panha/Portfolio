@@ -14,18 +14,21 @@ const ProjectsSection = () => {
   const animRef = useRef<number>();
   const scrollPos = useRef(0);
 
-  const speed = 0.4; // px per frame — slow & smooth
+  const speed = 0.5; // px per frame
+  const dragThreshold = 5;
+  const dragDistance = useRef(0);
 
   const animate = useCallback(() => {
-    if (!containerRef.current || isPaused || isDragging) {
+    if (!containerRef.current) {
       animRef.current = requestAnimationFrame(animate);
       return;
     }
-    scrollPos.current += speed;
-    // Reset seamlessly when we've scrolled through one set
-    const half = containerRef.current.scrollWidth / 3;
-    if (scrollPos.current >= half) scrollPos.current = 0;
-    containerRef.current.scrollLeft = scrollPos.current;
+    if (!isPaused && !isDragging) {
+      scrollPos.current += speed;
+      const third = containerRef.current.scrollWidth / 3;
+      if (scrollPos.current >= third) scrollPos.current -= third;
+      containerRef.current.scrollLeft = scrollPos.current;
+    }
     animRef.current = requestAnimationFrame(animate);
   }, [isPaused, isDragging]);
 
@@ -38,6 +41,7 @@ const ProjectsSection = () => {
 
   const onMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
+    dragDistance.current = 0;
     setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
     setScrollLeft(containerRef.current?.scrollLeft || 0);
   };
@@ -46,16 +50,18 @@ const ProjectsSection = () => {
     if (!isDragging || !containerRef.current) return;
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    containerRef.current.scrollLeft = scrollLeft - walk;
-    scrollPos.current = containerRef.current.scrollLeft;
+    const walk = (x - startX) * 1.5;
+    dragDistance.current = Math.abs(walk);
+    const newScroll = scrollLeft - walk;
+    containerRef.current.scrollLeft = newScroll;
+    scrollPos.current = newScroll;
   };
 
   const onEnd = () => setIsDragging(false);
 
-  // Touch support
   const onTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
+    dragDistance.current = 0;
     setStartX(e.touches[0].pageX - (containerRef.current?.offsetLeft || 0));
     setScrollLeft(containerRef.current?.scrollLeft || 0);
   };
@@ -63,9 +69,11 @@ const ProjectsSection = () => {
   const onTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !containerRef.current) return;
     const x = e.touches[0].pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    containerRef.current.scrollLeft = scrollLeft - walk;
-    scrollPos.current = containerRef.current.scrollLeft;
+    const walk = (x - startX) * 1.5;
+    dragDistance.current = Math.abs(walk);
+    const newScroll = scrollLeft - walk;
+    containerRef.current.scrollLeft = newScroll;
+    scrollPos.current = newScroll;
   };
 
   return (
@@ -86,7 +94,7 @@ const ProjectsSection = () => {
       <div
         ref={containerRef}
         className={`overflow-x-auto px-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"} select-none`}
-        style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onEnd}
@@ -102,7 +110,7 @@ const ProjectsSection = () => {
               to={`/project/${project.id}`}
               key={`${project.id}-${i}`}
               className="w-64 flex-shrink-0 group"
-              onClick={(e) => isDragging && e.preventDefault()}
+              onClick={(e) => dragDistance.current > dragThreshold && e.preventDefault()}
               draggable={false}
             >
               <div className="relative">
