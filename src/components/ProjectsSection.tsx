@@ -110,7 +110,7 @@ const ProjectsSection = () => {
               to={`/project/${project.id}`}
               key={`${project.id}-${i}`}
               className="w-64 flex-shrink-0 group"
-              onClick={(e) => isDragging && e.preventDefault()}
+              onClick={(e) => dragDistance.current > dragThreshold && e.preventDefault()}
               draggable={false}
             >
               <div className="relative">
