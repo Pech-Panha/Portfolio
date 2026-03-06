@@ -14,18 +14,21 @@ const ProjectsSection = () => {
   const animRef = useRef<number>();
   const scrollPos = useRef(0);
 
-  const speed = 0.4; // px per frame — slow & smooth
+  const speed = 0.5; // px per frame
+  const dragThreshold = 5;
+  const dragDistance = useRef(0);
 
   const animate = useCallback(() => {
-    if (!containerRef.current || isPaused || isDragging) {
+    if (!containerRef.current) {
       animRef.current = requestAnimationFrame(animate);
       return;
     }
-    scrollPos.current += speed;
-    // Reset seamlessly when we've scrolled through one set
-    const half = containerRef.current.scrollWidth / 3;
-    if (scrollPos.current >= half) scrollPos.current = 0;
-    containerRef.current.scrollLeft = scrollPos.current;
+    if (!isPaused && !isDragging) {
+      scrollPos.current += speed;
+      const third = containerRef.current.scrollWidth / 3;
+      if (scrollPos.current >= third) scrollPos.current -= third;
+      containerRef.current.scrollLeft = scrollPos.current;
+    }
     animRef.current = requestAnimationFrame(animate);
   }, [isPaused, isDragging]);
 
