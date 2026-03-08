@@ -8,6 +8,9 @@ import jumnusApp from "@/assets/jumnus-app.png";
 import eatzykh from "@/assets/eatzykh.png";
 import lomnouApp from "@/assets/lomnou-app.png";
 import aiJobTest from "@/assets/ai-job-test.png";
+import salalink from "@/assets/salalink.png";
+import ahago from "@/assets/ahago.png";
+import codeblockGame from "@/assets/codeblock-game.png";
 
 export interface Project {
   id: string;
