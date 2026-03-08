@@ -25,6 +25,40 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+
+    {
+    id: "salalink",
+    title: "Sala-Link",
+    category: "UI/UX Design",
+    shortDesc: "A digital school management system for students and teachers.",
+    longDesc: "Sala-Link is a comprehensive digital school management platform designed to streamline academic workflows. The dashboard provides students with an overview of their academic context, courses, attendance, and semester progress.\n\nThe UI features a clean, modern design with 3D illustrations, intuitive navigation, and integrated tools like AI Assist and personal request management — all tailored for the Cambodian education system.",
+    color: "bg-accent",
+    image: salalink,
+    linkType: "Figma",
+    linkUrl: "https://www.figma.com/design/M3JNV3g8Buz2UJVAzYpnb9/SalaLink?node-id=0-1&t=MLJU9whTUOpCJDJ6-1",
+  },
+  {
+    id: "ahago",
+    title: "AhaGo",
+    category: "UI/UX Design",
+    shortDesc: "A food delivery app with fresh, vibrant branding.",
+    longDesc: "AhaGo is a food delivery application featuring a green-themed, energetic visual identity. The app offers food category browsing, daily discount promotions, and a streamlined ordering experience.\n\nThe design showcases playful typography, a checkered pattern motif, and clean mobile UI with categories like Asian, Noodle, Soup, Halal, Vegetarian, and more — making food discovery intuitive and fun.",
+    color: "bg-secondary",
+    image: ahago,
+    linkType: "Figma",
+    linkUrl: "https://www.figma.com/design/KQxYvtzLHkUhGo9zq6Z3CI/AhaGo?node-id=0-1&t=tdfqeBlvsJ7RnigG-1",
+  },
+  {
+    id: "codeblock-game",
+    title: "Code-Block",
+    category: "Game UI/UX Design",
+    shortDesc: "Sci-fi mobile game UI/UX with space adventure theme.",
+    longDesc: "Code-Block is a mobile game UI/UX design featuring a sci-fi space adventure aesthetic. The design includes glowing neon jellyfish, astronaut characters, and a deep-space environment with rich particle effects.\n\nThe interface covers shop, inventory, mission, and settings screens — all wrapped in a dark, atmospheric visual style with vibrant neon accents that immerse players in an intergalactic adventure.",
+    color: "bg-primary",
+    image: codeblockGame,
+    linkType: "Figma",
+    linkUrl: "https://figma.com",
+  },
   
   {
     id: "jumnus-app",
@@ -101,7 +135,7 @@ export const projects: Project[] = [
     color: "bg-secondary",
     image: ghiblihood,
     linkType: "Live Demo",
-    linkUrl: "#",
+    linkUrl: "https://co2m5-ghiblihood.vercel.app/",
   },
   {
     id: "phsarkh-backend",
@@ -135,38 +169,5 @@ export const projects: Project[] = [
     image: phsarkhmer,
     linkType: "Live Demo",
     linkUrl: "phsar-khmer-liart.vercel.app",
-  },
-  {
-    id: "salalink",
-    title: "Sala-Link",
-    category: "UI/UX Design",
-    shortDesc: "A digital school management system for students and teachers.",
-    longDesc: "Sala-Link is a comprehensive digital school management platform designed to streamline academic workflows. The dashboard provides students with an overview of their academic context, courses, attendance, and semester progress.\n\nThe UI features a clean, modern design with 3D illustrations, intuitive navigation, and integrated tools like AI Assist and personal request management — all tailored for the Cambodian education system.",
-    color: "bg-accent",
-    image: salalink,
-    linkType: "Figma",
-    linkUrl: "https://figma.com",
-  },
-  {
-    id: "ahago",
-    title: "AhaGo",
-    category: "UI/UX Design",
-    shortDesc: "A food delivery app with fresh, vibrant branding.",
-    longDesc: "AhaGo is a food delivery application featuring a green-themed, energetic visual identity. The app offers food category browsing, daily discount promotions, and a streamlined ordering experience.\n\nThe design showcases playful typography, a checkered pattern motif, and clean mobile UI with categories like Asian, Noodle, Soup, Halal, Vegetarian, and more — making food discovery intuitive and fun.",
-    color: "bg-secondary",
-    image: ahago,
-    linkType: "Figma",
-    linkUrl: "https://figma.com",
-  },
-  {
-    id: "codeblock-game",
-    title: "Code-Block",
-    category: "Game UI/UX Design",
-    shortDesc: "Sci-fi mobile game UI/UX with space adventure theme.",
-    longDesc: "Code-Block is a mobile game UI/UX design featuring a sci-fi space adventure aesthetic. The design includes glowing neon jellyfish, astronaut characters, and a deep-space environment with rich particle effects.\n\nThe interface covers shop, inventory, mission, and settings screens — all wrapped in a dark, atmospheric visual style with vibrant neon accents that immerse players in an intergalactic adventure.",
-    color: "bg-primary",
-    image: codeblockGame,
-    linkType: "Figma",
-    linkUrl: "https://figma.com",
   },
 ];

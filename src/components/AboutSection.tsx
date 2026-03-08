@@ -13,7 +13,7 @@ const AboutSection = () => (
         </h2>
         <div className="w-32 h-1 bg-accent rounded-full mb-6" />
         <p className="font-body text-muted-foreground text-lg leading-relaxed mb-4">
-          I'm a <span className="font-semibold text-foreground">UI/UX design student</span> passionate
+          I'm <span className="font-semibold text-foreground"> Panha </span> a  UI/UX design student passionate
           about creating intuitive and beautiful digital experiences. I love{" "}
           <em className="text-primary font-medium">learning new design principles</em> and{" "}
           <em className="text-primary font-medium">solving real user problems</em> through thoughtful interfaces.
@@ -22,7 +22,7 @@ const AboutSection = () => (
           Currently studying and building my portfolio — eager to grow, collaborate, and bring fresh ideas to the design world.
         </p>
         <div className="flex flex-wrap gap-3">
-          {["UI Design", "UX Research", "Wireframing", "Prototyping", "Figma"].map((skill) => (
+          {["UI Design", "UX Research", "Wireframing", "Prototyping", "Figma", "Adobe XD"].map((skill) => (
             <span
               key={skill}
               className="bg-secondary text-secondary-foreground px-4 py-1.5 rounded-full font-body text-sm font-medium"

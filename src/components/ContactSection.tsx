@@ -36,7 +36,7 @@ const ContactSection = () => (
       </div>
 
       <p className="mt-12 font-body text-muted-foreground text-sm">
-        📍 Based in Indonesia · Open to remote opportunities
+        📍 Based in Phnom Penh · Open to remote opportunities
       </p>
     </div>
   </section>
