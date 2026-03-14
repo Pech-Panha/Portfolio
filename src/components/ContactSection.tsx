@@ -2,11 +2,11 @@ import { icons } from "lucide-react";
 import DecorativeStar from "./DecorativeStar";
 
 const socials = [
-  { name: "LinkedIn",   icon: "💼", url: "linkedin.com/in/pech-panha-b233293b3" },
+  { name: "LinkedIn",   icon: "💼", url: "https://www.linkedin.com/in/pech-panha-b233293b3/" },
   { name: "Github", icon: "🐈‍⬛", url: "https://github.com/Pech-Panha" },
   // { name: "Facebook", icon: "📰", url: "" },
   // { name: "Instagram", icon: "📸", url: "" },
-  { name: "Email", icon: "📧", url: "pechp138@gmail.com" },
+  { name: "Email", icon: "📧", url: "mailto:pechp138@gmail.com" },
 ];
 
 const ContactSection = () => (
